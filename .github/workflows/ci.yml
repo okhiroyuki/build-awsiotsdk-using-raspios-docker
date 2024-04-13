@@ -24,14 +24,12 @@ jobs:
       run: |
         docker run --rm -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
-        apt update
-        apt install git -y
+        apt-get update
+        apt-get install git -y
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
-        python3 -m venv venv
-        source venv/bin/activate
-        python3 -m pip install --upgrade awscrt
-        python setup.py bdist_wheel
+        pip install --upgrade awscrt
+        python3 setup.py bdist_wheel
         EOF
     - name: Check dist
       run: ls -l dist
