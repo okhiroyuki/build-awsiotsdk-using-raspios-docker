@@ -24,6 +24,8 @@ jobs:
       run: |
         docker run --rm -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
+        apt update
+        apt install git -y
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
         python3 -m venv venv
