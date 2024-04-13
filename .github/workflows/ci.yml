@@ -1,0 +1,17 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - run: |
+        docker run --rm --endpoint bin/bash armhf/raspios-lite-armhf:2022-04-04 << EOF
+        set -xeu
+        uname -a
+        apt update
+        EOF
