@@ -20,8 +20,9 @@ jobs:
       run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
-    - run: |
-        docker run --rm -i -v $PWD:/app --platform=linux/arm/v7 ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 << EOF
+    - name: Build awsiotsdk
+      run: |
+        docker run --rm -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 << EOF
         set -xeu
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
