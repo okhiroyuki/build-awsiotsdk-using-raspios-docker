@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
     - name: Import DockerImage
       run: bash import_docker_image.sh
     - name: Docker Images
       run: docker images
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v3
+    - name: check docker id
+      run: docker images raspios_lite_armhf:2022-04-04 --format "{{.ID}}"
     - name: Build awsiotsdk
       run: |
-        ID=$(docker images raspios_lite_armhf:2022-04-04 --format "{{.ID}}")
-        echo $ID
-        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app $ID bash << EOF
+        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
