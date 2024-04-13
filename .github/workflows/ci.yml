@@ -35,8 +35,6 @@ jobs:
         python3 setup.py bdist_wheel
         EOF
     - name: cp wheel
-      run: docker cp $(docker ps -lq):/app/aws-iot-device-sdk-python-v2 /dist
-    - name: docker rm
-      run: docker rm $(docker ps -lq)
+      run: docker cp ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04:/app/aws-iot-device-sdk-python-v2 /dist
     - name: Check dist
       run: ls -l dist
