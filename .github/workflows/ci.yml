@@ -39,4 +39,4 @@ jobs:
     - name: remove docker container
       run: docker rm raspios-lite-armhf
     - name: Check dist
-      run: ls -l dist
+      run: ls -l
