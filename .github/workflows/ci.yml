@@ -27,6 +27,9 @@ jobs:
         docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
         cat /etc/os-release
+        cat /etc/issues
+        cat /proc/version
+        lsb_release -a
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
