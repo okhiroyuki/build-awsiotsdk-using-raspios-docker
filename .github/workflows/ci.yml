@@ -14,23 +14,13 @@ jobs:
       run: bash import_docker_image.sh
     - name: Docker Images
       run: docker images
-    - name: Docker Run
-      run: |
-        ID=$(docker images raspios_lite_armhf:2022-04-04 --format "{{.ID}}")
-        docker run -it --rm $ID
-    - name: Log in to the Container registry
-      uses: docker/login-action@v3
-      with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
-    - name: Pull Docker Image
-      run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Build awsiotsdk
       run: |
-        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
+        ID=$(docker images raspios_lite_armhf:2022-04-04 --format "{{.ID}}")
+        echo $ID
+        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app $ID bash << EOF
         set -xeu
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
