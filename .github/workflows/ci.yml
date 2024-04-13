@@ -16,7 +16,8 @@ jobs:
       run: docker images
     - name: Docker Run
       run: |
-        docker run -it --rm raspios-lite-armhf:2022-04-04 bash << EOF
+        ID=$(docker images raspios_lite_armhf:2022-04-04 --format "{{.ID}}")
+        docker run -it --rm $ID bash << EOF
         set -xeu
         uname -a
         EOF
