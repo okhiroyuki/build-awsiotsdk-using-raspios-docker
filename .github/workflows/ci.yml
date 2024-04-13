@@ -12,7 +12,7 @@ jobs:
       with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
     - name: Pull Docker Image
       run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Set up QEMU
