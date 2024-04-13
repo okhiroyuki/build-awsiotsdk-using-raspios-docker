@@ -1,0 +1,54 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
+    - name: Pull Docker Image
+      run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
+    - name: start qemu-user-static
+      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    # - name: Import DockerImage
+    #   run: bash import_docker_image.sh
+    - name: Build awsiotsdk
+      run: |
+        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
+        set -xeu
+        cat /etc/os-release
+        cat /etc/issue
+        cat /proc/version
+        lsb_release -a
+        uname -a
+        apt-get update
+        apt-get install git python3-pip -y --no-install-recommends
+        git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
+        cp requirements.txt aws-iot-device-sdk-python-v2/
+        cd aws-iot-device-sdk-python-v2
+        python3 -m pip install -r requirements.txt
+        python3 setup.py bdist_wheel
+        EOF
+    - name: docker ps
+      run: docker ps -a
+    - name: cp wheel
+      run: sudo docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2/dist /dist
+    - name: remove docker container
+      run: docker rm raspios-lite-armhf
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: /dist
