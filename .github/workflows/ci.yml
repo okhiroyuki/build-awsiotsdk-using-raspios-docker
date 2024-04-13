@@ -24,7 +24,7 @@ jobs:
       run: mkdir dist
     - name: Build awsiotsdk
       run: |
-        docker run --rm -i -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
+        docker run -i -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
@@ -36,5 +36,7 @@ jobs:
         EOF
     - name: cp wheel
       run: docker cp ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04:/app/aws-iot-device-sdk-python-v2 /dist
+    - name: remove docker container
+      run: docker rm ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Check dist
       run: ls -l dist
