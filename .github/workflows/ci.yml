@@ -28,7 +28,7 @@ jobs:
         apt-get install git -y
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
-        pip install --upgrade awscrt
+        python3 -m pip install --upgrade awscrt
         python3 setup.py bdist_wheel
         EOF
     - name: Check dist
