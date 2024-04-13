@@ -24,15 +24,18 @@ jobs:
       run: |
         docker run -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
+        ls -l
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
         python3 -m pip install awscrt==0.20.5
         python3 setup.py bdist_wheel
+        pwd
+        ls -l
         EOF
     - name: cp wheel
-      run: docker cp $(docker ps -lq):/app/aws-iot-device-sdk-python-v2/dist /dist
+      run: docker cp $(docker ps -lq):/app/aws-iot-device-sdk-python-v2 /dist
     - name: docker rm
       run: docker rm $(docker ps -lq)
     - name: Check dist
