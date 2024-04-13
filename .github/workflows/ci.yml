@@ -4,9 +4,17 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Log in to the Container registry
+      uses: docker/login-action@v1
+      with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Pull Docker Image
+      run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - run: |
