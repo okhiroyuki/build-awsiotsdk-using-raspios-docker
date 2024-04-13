@@ -38,5 +38,8 @@ jobs:
       run: sudo docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2/dist /dist
     - name: remove docker container
       run: docker rm raspios-lite-armhf
-    - name: Check dist
-      run: ls -l /dist
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: /dist
