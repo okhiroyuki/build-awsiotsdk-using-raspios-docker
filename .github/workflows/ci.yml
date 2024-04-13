@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Log in to the Container registry
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -22,7 +22,7 @@ jobs:
       uses: docker/setup-qemu-action@v3
     - name: Build awsiotsdk
       run: |
-        docker run --rm -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 << EOF
+        docker run --rm -i -v $PWD:/app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
         git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
         cd aws-iot-device-sdk-python-v2
