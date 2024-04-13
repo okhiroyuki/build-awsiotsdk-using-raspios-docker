@@ -21,8 +21,9 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - run: |
-        docker run --rm --entrypoint bin/bash armhf/raspios-lite-armhf:2022-04-04 << EOF
-        set -xeu
-        uname -a
-        apt update
-        EOF
+        docker images
+        # docker run --rm --entrypoint bin/bash armhf/raspios-lite-armhf:2022-04-04 << EOF
+        # set -xeu
+        # uname -a
+        # apt update
+        # EOF
