@@ -32,4 +32,4 @@ jobs:
         python3 setup.py bdist_wheel
         EOF
     - name: Check dist
-      run: ls -l dist
+      run: ls -l
