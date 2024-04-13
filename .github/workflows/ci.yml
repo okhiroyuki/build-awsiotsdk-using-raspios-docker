@@ -24,14 +24,21 @@ jobs:
       run: mkdir dist
     - name: Build awsiotsdk
       run: |
-        docker run -i -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
+        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
+        apt-get update
+        apt-get install git python3-pip -y --no-install-recommends
+        git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
+        cp requirements.txt aws-iot-device-sdk-python-v2/
+        cd aws-iot-device-sdk-python-v2
+        python3 -m pip install -r requirements.txt
+        python3 setup.py bdist_wheel
         EOF
     - name: docker ps
       run: docker ps -a
     - name: cp wheel
-      run: docker cp ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04:/app/aws-iot-device-sdk-python-v2 /dist
+      run: docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2 /dist
     - name: remove docker container
-      run: docker rm ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
+      run: docker rm raspios-lite-armhf
     - name: Check dist
       run: ls -l dist
