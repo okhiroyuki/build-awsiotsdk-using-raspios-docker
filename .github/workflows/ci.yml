@@ -20,8 +20,6 @@ jobs:
       run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
-    - name: mkdir dist
-      run: mkdir dist
     - name: Build awsiotsdk
       run: |
         docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
@@ -37,7 +35,7 @@ jobs:
     - name: docker ps
       run: docker ps -a
     - name: cp wheel
-      run: docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2 /dist
+      run: sudo docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2 /dist
     - name: remove docker container
       run: docker rm raspios-lite-armhf
     - name: Check dist
