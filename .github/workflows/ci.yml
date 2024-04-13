@@ -21,8 +21,14 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - run: |
-        docker run --rm --entrypoint bin/bash ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 << EOF
+        docker run --rm -i -v $PWD:/app --platform=linux/arm/v7 ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 << EOF
         set -xeu
-        uname -a
-        apt update
+        git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
+        cd aws-iot-device-sdk-python-v2
+        python3 -m venv venv
+        source venv/bin/activate
+        python3 -m pip install --upgrade awscrt
+        python setup.py bdist_wheel
         EOF
+    - name: Check dist
+      run: ls -l dist
