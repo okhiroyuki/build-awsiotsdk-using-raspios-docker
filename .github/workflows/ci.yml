@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Docker Import
-      run: bash import_docker_image.sh
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
+    - name: Docker Import
+      run: bash import_docker_image.sh
+    - name: Docker Images
+      run: docker images
     - name: Docker Run & Build Wheel
       run: |
         docker run -i --name raspios-lite-armhf --platform=linux/arm/v7 -v $PWD:/app -w /app raspios-lite-armhf:2022-04-04 bash << EOF
