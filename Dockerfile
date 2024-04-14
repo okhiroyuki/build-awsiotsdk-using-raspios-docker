@@ -17,10 +17,9 @@ RUN sudo apt-get update -y \
 # Install pyenv
 RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-CMD ["bash", "-l"]
 
 # Python Install
-RUN pyenv install
+RUN ~/.pyenv/bin/pyenv install
 
 # Install dependencies
 RUN python3 -m pip install --upgrade pip \
