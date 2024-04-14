@@ -5,17 +5,17 @@ TAG="v0.20.5"
 set -xeu
 
 # Display the OS information
-cat /etc/os-release
-cat /etc/issue
-cat /proc/version
-lsb_release -a
-lscpu | grep -e "Architecture" -e "Model name"
+# cat /etc/os-release
+# cat /etc/issue
+# cat /proc/version
+# lsb_release -a
+# lscpu | grep -e "Architecture" -e "Model name"
 
 # Install dependencies
-apt-get update -y
+sudo apt-get update -y
 
 # Install dependencies refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
-apt-get install git cmake \
+sudo apt-get install git cmake \
 build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev curl \
 libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
@@ -31,24 +31,19 @@ source ~/.bashrc
 # Python Install
 pyenv install
 
-# Raspberry Pi
-more /proc/device-tree/model
-# CPU
-uname -m
-# OS
-uname -o
-# Python version
+
+# Display the OS information
+uname -m # CPU architecture
+uname -o # OS
 python3 -V
-# Git version
 git --version
-# Cmake version
 cmake --version
 
-# # Clone the AWS Common Runtime (CRT) for Python repository
-# git clone https://github.com/awslabs/aws-crt-python.git -b $TAG
-# cd aws-crt-python
-# git submodule update --init
-# python3 -m pip install .
+# Clone the AWS Common Runtime (CRT) for Python repository
+git clone https://github.com/awslabs/aws-crt-python.git -b $TAG
+cd aws-crt-python
+git submodule update --init
+python3 -m pip install .
 
-# # Install the dependencies and build the wheel package
-# python3 setup.py bdist_wheel
+# Install the dependencies and build the wheel package
+python3 setup.py bdist_wheel

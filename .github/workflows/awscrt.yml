@@ -14,8 +14,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      WORK_DIR: /workspace
     steps:
     - uses: actions/checkout@v4
     - name: Set up QEMU
@@ -24,14 +22,14 @@ jobs:
       run: bash import_docker_image.sh
     - name: Build awsiotsdk
       run: |
-        docker run -i --name raspios-lite-armhf -v $PWD:$WORK_DIR -w $WORK_DIR --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
-        git config --global --add safe.directory $WORK_DIR
+        docker run -i --name raspios-lite-armhf -v $PWD:/workspace -w /workspace --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
+        git config --global --add safe.directory /workspace
         bash build_awscrt.sh
         EOF
     - name: docker ps
       run: docker ps -a
     - name: cp wheel
-      run: sudo docker cp raspios-lite-armhf:$WORK_DIR/aws-crt-python/dist /dist
+      run: sudo docker cp raspios-lite-armhf:/workspace/aws-crt-python/dist /dist
     - name: remove docker container
       run: docker rm raspios-lite-armhf
     - name: Upload Artifact
