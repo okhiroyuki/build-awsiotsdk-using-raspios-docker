@@ -27,7 +27,7 @@ jobs:
     - name: cp wheel
       run: |
         sudo docker compose cp python3:/workspace/aws-iot-device-sdk-python-v2/dist /dist
-        sudo docker compose cp python3:/app/aws-crt-python/dist /dist
+        sudo docker compose cp python3:/workspace/aws-crt-python/dist /dist
     - name: docker-compose down
       run: docker-compose down
     - name: Upload Artifact
