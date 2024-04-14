@@ -23,7 +23,6 @@ jobs:
     - name: Build awsiotsdk
       run: |
         docker run -i --name raspios-lite-armhf -v $PWD:/workspace -w /workspace --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
-        git config --global --add safe.directory /workspace
         bash build_awscrt.sh
         EOF
     - name: docker ps

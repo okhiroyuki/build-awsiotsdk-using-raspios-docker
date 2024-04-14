@@ -43,6 +43,7 @@ cmake --version
 git clone https://github.com/awslabs/aws-crt-python.git -b $TAG
 cd aws-crt-python
 git submodule update --init
+python3 -m pip install wheel setuptools
 python3 -m pip install .
 
 # Install the dependencies and build the wheel package
