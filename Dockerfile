@@ -3,6 +3,13 @@ FROM raspios-lite-armhf:2022-04-04
 ENV PYENV_ROOT=$HOME/.pyenv \
     PATH=$PYENV_ROOT/bin/:$PATH
 
+# set the variables as per $(pyenv init -)
+ENV LANG="C.UTF-8" \
+    LC_ALL="C.UTF-8" \
+    PATH="/opt/pyenv/shims:/opt/pyenv/bin:$PATH" \
+    PYENV_ROOT="/opt/pyenv" \
+    PYENV_SHELL="bash"
+
 # Install dependencies
 # refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 RUN sudo apt-get update -y \
@@ -19,7 +26,7 @@ RUN sudo apt-get update -y \
 # RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
 
 RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT \
-    && pyenv install .python_version \
+    && pyenv install \
     && pyenv global `cat .python-version`
 
 # # Python Install
