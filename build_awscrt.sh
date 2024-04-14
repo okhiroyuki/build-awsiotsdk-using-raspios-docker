@@ -14,7 +14,12 @@ uname -m
 
 # Install dependencies
 apt-get update -y \
-&& apt-get install git python3-pip cmake python3-dev -y --no-install-recommends
+&& apt-get install git cmake -y --no-install-recommends
+
+# Install pyenv
+curl https://pyenv.run | bash
+
+pyenv install
 
 # Set the default directory for the safe command
 git config --global --add safe.directory /app
