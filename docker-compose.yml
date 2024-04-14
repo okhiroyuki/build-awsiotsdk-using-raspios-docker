@@ -4,7 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: raspios-lite-armhf-cp311
+    image: raspios-lite-armhf-2022-04-04:python3.11.3
+    container_name: raspios-lite-armhf
     platform: linux/arm/v7
     tty: true
     volumes:
