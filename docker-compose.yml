@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: raspios-lite-armhf
+    container_name: raspios-lite-armhf-cp311
     platform: linux/arm/v7
     tty: true
     volumes:
