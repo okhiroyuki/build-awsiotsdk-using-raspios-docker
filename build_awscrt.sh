@@ -12,8 +12,14 @@ lsb_release -a
 lscpu | grep -e "Architecture" -e "Model name"
 
 # Install dependencies
-apt-get update -y \
-&& apt-get install git cmake build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev -y --no-install-recommends
+apt-get update -y
+
+# Install dependencies refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+apt-get install git cmake \
+build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev curl \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
+-y --no-install-recommends
 
 # Install pyenv
 curl https://pyenv.run | bash
