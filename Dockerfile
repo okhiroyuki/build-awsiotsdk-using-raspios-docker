@@ -15,10 +15,13 @@ RUN sudo apt-get update -y \
 RUN curl https://pyenv.run | bash \
     && echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc \
     && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc \
-    && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
-    && source ~/.bashrc
+    && echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 
-    # Python Install
+ENV PYENV_ROOT "/pyenv"
+ENV PATH "$PYENV_ROOT/bin:$PATH"
+RUN eval "$(pyenv init -)"
+
+# Python Install
 RUN pyenv install
 
 # Install dependencies
