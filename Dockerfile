@@ -28,16 +28,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libxmlsec1-dev \
         libffi-dev \
         liblzma-dev \
-    && sudo apt-get clean \
-    && sudo rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install pyenv
 # RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 # RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
 
 RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT \
-    && pyenv install `cat .python-version` \
-    && pyenv global `cat .python-version`
+    && pyenv install 3.11.3 \
+    && pyenv global 3.11.3
 
 # # Python Install
 # RUN eval "$(pyenv init -)" \
