@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  python311:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: raspios-lite-armhf
+    platform: linux/arm/v7
+    tty: true
+    volumes:
+      - .:/workspace
+    working_dir: /workspace

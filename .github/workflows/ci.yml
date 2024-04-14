@@ -1,0 +1,38 @@
+name: Python Module
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Import Docker Image
+      run: bash import_docker_image.sh
+    - name: docker-compose up
+      run: docker-compose up -d
+    - name: docker-compose exec
+      run: docker-compose exec python311 bash -c "bash display_info.sh"
+    - name: docker-compose down
+      run: docker-compose down
+    # - name: Build awsiotsdk
+    #   run: |
+    #     docker run -i --name raspios-lite-armhf -v $PWD:/workspace -w /workspace --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
+    #     bash build_awscrt.sh
+    #     EOF
+    # - name: docker ps
+    #   run: docker ps -a
+    # - name: cp wheel
+    #   run: sudo docker cp raspios-lite-armhf:/workspace/aws-crt-python/dist /dist
+    # - name: remove docker container
+    #   run: docker rm raspios-lite-armhf
+    # - name: Upload Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: dist
+    #     path: /dist

@@ -4,14 +4,6 @@ TAG="v1.21.1"
 
 set -xeu
 
-# Display the OS information
-cat /etc/os-release
-cat /etc/issue
-cat /proc/version
-lsb_release -a
-lscpu | grep -e "Architecture" -e "Model name"
-uname -a
-
 # Install dependencies
 apt-get update -y \
 && apt-get install git python3-pip -y --no-install-recommends
