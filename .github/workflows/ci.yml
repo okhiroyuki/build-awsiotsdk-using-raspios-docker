@@ -16,6 +16,8 @@ jobs:
       run: bash import_docker_image.sh
     - name: docker-compose build
       run: docker-compose build
+    - name: docker compose up
+      run: docker compose up -d
     - name: docker ps
       run: docker compose ps
     # - name: docker-compose exec
