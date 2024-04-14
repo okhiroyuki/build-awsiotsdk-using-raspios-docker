@@ -15,7 +15,8 @@ RUN sudo apt-get update -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # Install pyenv
-RUN git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
 RUN eval "$(pyenv init -)"
 
 # Python Install
