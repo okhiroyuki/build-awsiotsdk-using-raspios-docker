@@ -1,5 +1,7 @@
 FROM raspios-lite-armhf:2022-04-04
 
+CMD ["/bin/bash"]
+
 # Install dependencies refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 # RUN sudo apt-get update -y \
 #     && sudo apt-get install git cmake \
