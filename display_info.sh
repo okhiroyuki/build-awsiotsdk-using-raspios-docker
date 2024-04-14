@@ -11,4 +11,3 @@ lscpu | grep -e "Architecture" -e "Model name"
 uname -a
 
 python3 --version
-git --version
