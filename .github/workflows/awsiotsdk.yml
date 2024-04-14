@@ -1,4 +1,4 @@
-name: CI
+name: awsiotsdk
 
 on:
     pull_request:
@@ -29,7 +29,7 @@ jobs:
     - name: Build awsiotsdk
       run: |
         docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
-        bash build.sh
+        bash build_awsiotsdk.sh
         EOF
     - name: docker ps
       run: docker ps -a
