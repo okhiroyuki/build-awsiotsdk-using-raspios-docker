@@ -10,4 +10,7 @@ lsb_release -a
 lscpu | grep -e "Architecture" -e "Model name"
 uname -a
 
+# Display the installed software versions
 python3 --version
+git --version
+cmake --version
