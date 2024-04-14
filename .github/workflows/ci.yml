@@ -22,7 +22,9 @@ jobs:
     #   run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
     # - name: start qemu-user-static
     #   run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    - name: Import DockerImage
+    - name: Docker Buildx ls
+      run: docker buildx ls
+    - name: Import Docker Image
       run: bash import_docker_image.sh
     - name: Build awsiotsdk
       run: |
@@ -32,6 +34,7 @@ jobs:
         cat /etc/issue
         cat /proc/version
         lsb_release -a
+        lscpu | grep -e "Architecture" -e "Model name"
         uname -a
         apt-get update
         apt-get install git python3-pip -y --no-install-recommends
