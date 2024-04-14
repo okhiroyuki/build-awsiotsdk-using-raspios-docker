@@ -2,8 +2,14 @@ name: awscrt
 
 on:
     pull_request:
+        paths:
+            - "build_awscrt.sh"
+            - ".github/workflows/awscrt.yml"
     push:
         branches: [main]
+        paths:
+            - "build_awscrt.sh"
+            - ".github/workflows/awscrt.yml"
 
 jobs:
   build:
@@ -14,8 +20,6 @@ jobs:
       uses: docker/setup-qemu-action@v3
     - name: Import Docker Image
       run: bash import_docker_image.sh
-    - name: Set up a Git safe directory
-      run: git config --global --add safe.directory "${{ github.workspace }}/app"
     - name: Build awsiotsdk
       run: |
         docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF

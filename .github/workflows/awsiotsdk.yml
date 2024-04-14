@@ -2,8 +2,14 @@ name: awsiotsdk
 
 on:
     pull_request:
+      paths:
+        - "build_awsiotsdk.sh"
+        - ".github/workflows/awsiotsdk.yml"
     push:
         branches: [main]
+        paths:
+            - "build_awsiotsdk.sh"
+            - ".github/workflows/awsiotsdk.yml"
 
 jobs:
   build:
