@@ -1,15 +1,15 @@
 name: awscrt
 
 on:
-    pull_request:
-        paths:
-            - "build_awscrt.sh"
-            - ".github/workflows/awscrt.yml"
-    push:
-        branches: [main]
-        paths:
-            - "build_awscrt.sh"
-            - ".github/workflows/awscrt.yml"
+  pull_request:
+    paths:
+      - "build_awscrt.sh"
+      - ".github/workflows/awscrt.yml"
+  push:
+    branches: [main]
+    paths:
+      - "build_awscrt.sh"
+      - ".github/workflows/awscrt.yml"
 
 jobs:
   build:
