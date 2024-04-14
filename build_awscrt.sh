@@ -10,27 +10,33 @@ cat /etc/issue
 cat /proc/version
 lsb_release -a
 lscpu | grep -e "Architecture" -e "Model name"
-uname -m
 
 # Install dependencies
 apt-get update -y \
-&& apt-get install git cmake -y --no-install-recommends
+&& apt-get install git cmake build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev -y --no-install-recommends
 
 # Install pyenv
 curl https://pyenv.run | bash
-
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-
 source ~/.bashrc
 
+# Python Install
 pyenv install
 
-# Set the default directory for the safe command
-git config --global --add safe.directory /app
-
+# Raspberry Pi
+more /proc/device-tree/model
+# CPU
+uname -m
+# OS
+uname -o
+# Python version
 python3 -V
+# Git version
+git --version
+# Cmake version
+cmake --version
 
 # # Clone the AWS Common Runtime (CRT) for Python repository
 # git clone https://github.com/awslabs/aws-crt-python.git -b $TAG
