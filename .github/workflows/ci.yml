@@ -20,15 +20,13 @@ jobs:
     #       password: ${{ secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
     # - name: Pull Docker Image
     #   run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
-    - name: import docker image
+    # - name: start qemu-user-static
+    #   run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+    - name: Import DockerImage
       run: bash import_docker_image.sh
-    - name: start qemu-user-static
-      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    # - name: Import DockerImage
-    #   run: bash import_docker_image.sh
     - name: Build awsiotsdk
       run: |
-        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
+        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
         set -xeu
         cat /etc/os-release
         cat /etc/issue
