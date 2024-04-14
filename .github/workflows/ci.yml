@@ -1,9 +1,9 @@
-name: CI
+name: Python Module
 
 on:
-    pull_request:
-    push:
-        branches: [main]
+  pull_request:
+  push:
+    branches: [main]
 
 jobs:
   build:
@@ -12,43 +12,26 @@ jobs:
     - uses: actions/checkout@v4
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
-    - name: Log in to the Container registry
-      uses: docker/login-action@v3
-      with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
-    - name: Pull Docker Image
-      run: docker pull ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04
-    - name: start qemu-user-static
-      run: docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-    # - name: Import DockerImage
-    #   run: bash import_docker_image.sh
-    - name: Build awsiotsdk
-      run: |
-        docker run -i --name raspios-lite-armhf -v $PWD:/app -w /app --platform linux/arm/v7 ghcr.io/okhiroyuki/raspios-lite-armhf:2022-04-04 bash << EOF
-        set -xeu
-        cat /etc/os-release
-        cat /etc/issue
-        cat /proc/version
-        lsb_release -a
-        uname -a
-        apt-get update
-        apt-get install git python3-pip -y --no-install-recommends
-        git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
-        cp requirements.txt aws-iot-device-sdk-python-v2/
-        cd aws-iot-device-sdk-python-v2
-        python3 -m pip install -r requirements.txt
-        python3 setup.py bdist_wheel
-        EOF
-    - name: docker ps
-      run: docker ps -a
+    - name: Import Docker Image
+      run: bash import_docker_image.sh
+    - name: docker compose up
+      run: docker compose up -d --build
+    - name: docker compse ps
+      run: docker compose ps
+    - name: display info
+      run: docker-compose exec -T python3 bash -c "bash display_info.sh"
+    - name: build awsiotsdk
+      run: docker-compose exec -T python3 bash -c "bash build_awsiotsdk.sh"
+    - name: build awscrt
+      run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
     - name: cp wheel
-      run: sudo docker cp raspios-lite-armhf:/app/aws-iot-device-sdk-python-v2/dist /dist
-    - name: remove docker container
-      run: docker rm raspios-lite-armhf
+      run: |
+        sudo docker compose cp python3:/workspace/aws-iot-device-sdk-python-v2/dist /dist
+        sudo docker compose cp python3:/workspace/aws-crt-python/dist /dist
+    - name: docker-compose down
+      run: docker-compose down
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: /dist
