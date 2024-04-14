@@ -14,16 +14,14 @@ jobs:
       uses: docker/setup-qemu-action@v3
     - name: Import Docker Image
       run: bash import_docker_image.sh
-    - name: docker-compose build
-      run: docker-compose build
     - name: docker compose up
-      run: docker compose up -d
+      run: docker compose up -d --build
     - name: docker ps
       run: docker compose ps
-    # - name: docker-compose exec
-    #   run: docker-compose exec python311 bash -c "bash display_info.sh"
-    # - name: docker-compose down
-    #   run: docker-compose down
+    - name: docker-compose exec
+      run: docker-compose exec python311 bash -c "bash display_info.sh"
+    - name: docker-compose down
+      run: docker-compose down
     # - name: Build awsiotsdk
     #   run: |
     #     docker run -i --name raspios-lite-armhf -v $PWD:/workspace -w /workspace --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
