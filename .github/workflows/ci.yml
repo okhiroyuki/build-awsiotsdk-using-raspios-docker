@@ -21,7 +21,7 @@ jobs:
     - name: display info
       run: docker-compose exec -T python3 bash -c "bash display_info.sh"
     - name: build awsiotsdk
-      run: docker-compose exec -T python3 bash -c "bash busild_awsiotsdk.sh"
+      run: docker-compose exec -T python3 bash -c "bash build_awsiotsdk.sh"
     # - name: build awscrt
     #   run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
     - name: cp wheel
