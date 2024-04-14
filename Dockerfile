@@ -19,8 +19,8 @@ ENV PYENV_ROOT $HOME/.pyenv
 ENV PATH $PYENV_ROOT/bin/:$PATH
 
 # Python Install
-RUN eval "$(~/.pyenv/bin/pyenv init -)" \
-    && ~/.pyenv/bin/pyenv install
+RUN eval "$(pyenv init -)" \
+    && pyenv install
 
 # Install dependencies
 RUN python3 -m pip install --upgrade pip \
