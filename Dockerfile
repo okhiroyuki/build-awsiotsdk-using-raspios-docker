@@ -1,5 +1,8 @@
 FROM raspios-lite-armhf:2022-04-04
 
+ENV PYENV_ROOT=$HOME/.pyenv \
+    PATH=$PYENV_ROOT/bin/:$PATH
+
 # Install dependencies
 # refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 RUN sudo apt-get update -y \
@@ -12,15 +15,16 @@ RUN sudo apt-get update -y \
     && sudo rm -rf /var/lib/apt/lists/*
 
 # Install pyenv
-RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+# RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+# RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
 
-ENV PYENV_ROOT $HOME/.pyenv
-ENV PATH $PYENV_ROOT/bin/:$PATH
+RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT \
+    && pyenv install .python_version \
+    && pyenv global `cat .python-version`
 
-# Python Install
-RUN eval "$(pyenv init -)" \
-    && pyenv install
+# # Python Install
+# RUN eval "$(pyenv init -)" \
+#     && pyenv install
 
 # Install dependencies
 RUN python3 -m pip install --upgrade pip \
