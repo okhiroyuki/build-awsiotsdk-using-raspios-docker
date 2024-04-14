@@ -1,9 +1,7 @@
 FROM raspios-lite-armhf:2022-04-04
 
-ENV PYENV_ROOT=$HOME/.pyenv \
-    PATH=$PYENV_ROOT/bin/:$PATH
-
 # set the variables as per $(pyenv init -)
+# refs: https://github.com/bopen/docker-ubuntu-pyenv/blob/master/Dockerfile
 ENV LANG="C.UTF-8" \
     LC_ALL="C.UTF-8" \
     PATH="/opt/pyenv/shims:/opt/pyenv/bin:$PATH" \
@@ -32,16 +30,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install pyenv
-# RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-# RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-
 RUN git clone https://github.com/pyenv/pyenv.git $PYENV_ROOT \
-    && pyenv install 3.11.3 \
-    && pyenv global 3.11.3
-
-# # Python Install
-# RUN eval "$(pyenv init -)" \
-#     && pyenv install
+    && pyenv install ${PYTHON_VERSION} \
+    && pyenv global ${PYTHON_VERSION}
 
 # Install dependencies
 RUN python3 -m pip install --upgrade pip \

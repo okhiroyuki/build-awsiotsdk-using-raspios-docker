@@ -19,15 +19,15 @@ jobs:
     - name: docker ps
       run: docker compose ps
     - name: display info
-      run: docker-compose exec -T python311 bash -c "bash display_info.sh"
+      run: docker-compose exec -T python3 bash -c "bash display_info.sh"
     - name: build awsiotsdk
-      run: docker-compose exec -T python311 bash -c "bash build_awsiotsdk.sh"
+      run: docker-compose exec -T python3 bash -c "bash busild_awsiotsdk.sh"
     # - name: build awscrt
-    #   run: docker-compose exec -T python311 bash -c "bash build_awscrt.sh"
+    #   run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
     - name: cp wheel
       run: |
-        sudo docker-compose cp python311:/app/aws-iot-device-sdk-python-v2/dist /dist
-    # sudo docker-compose cp python311:/app/aws-crt-python/dist /dist
+        sudo docker compose cp raspios-lite-armhf:/workspace/aws-iot-device-sdk-python-v2/dist /dist
+    # sudo docker compose cp raspios-lite-armhf:/app/aws-crt-python/dist /dist
     - name: docker-compose down
       run: docker-compose down
     - name: Upload Artifact
@@ -35,12 +35,3 @@ jobs:
       with:
         name: dist
         path: /dist
-    # - name: Build awsiotsdk
-    #   run: |
-    #     docker run -i --name raspios-lite-armhf -v $PWD:/workspace -w /workspace --platform linux/arm/v7 raspios-lite-armhf:2022-04-04 bash << EOF
-    #     bash build_awscrt.sh
-    #     EOF
-    # - name: cp wheel
-    #   run: sudo docker cp raspios-lite-armhf:/workspace/aws-crt-python/dist /dist
-    # - name: remove docker container
-    #   run: docker rm raspios-lite-armhf

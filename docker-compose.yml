@@ -1,9 +1,11 @@
 version: "3.9"
 services:
-  python311:
+  python3:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        PYTHON_VERSION: 3.11.3
     image: raspios-lite-armhf-2022-04-04:python3.11.3
     container_name: raspios-lite-armhf
     platform: linux/arm/v7
