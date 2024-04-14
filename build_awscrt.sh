@@ -17,7 +17,7 @@ apt-get update -y \
 # Clone the AWS Common Runtime (CRT) for Python repository
 git clone https://github.com/awslabs/aws-crt-python.git
 git config --global --add safe.directory /app
-git checkout v0.20.5
+git checkout -b tag refs/tags/v0.20.5
 cd aws-crt-python
 git submodule update --init
 python3 -m pip install .
