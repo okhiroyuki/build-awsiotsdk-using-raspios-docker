@@ -16,7 +16,7 @@ jobs:
       run: bash import_docker_image.sh
     - name: docker compose up
       run: docker compose up -d --build
-    - name: docker ps
+    - name: docker compse ps
       run: docker compose ps
     - name: display info
       run: docker-compose exec -T python3 bash -c "bash display_info.sh"
