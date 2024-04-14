@@ -9,7 +9,9 @@ RUN sudo apt-get update -y \
     build-essential libssl-dev zlib1g-dev \
     libbz2-dev libreadline-dev libsqlite3-dev curl \
     libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev \
-    -y --no-install-recommends
+    -y --no-install-recommends \
+    && sudo apt-get clean \
+    && sudo rm -rf /var/lib/apt/lists/*
 
 # Install pyenv
 RUN curl https://pyenv.run | bash \
@@ -17,9 +19,7 @@ RUN curl https://pyenv.run | bash \
     && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc \
     && echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 
-ENV PYENV_ROOT "/pyenv"
-ENV PATH "$PYENV_ROOT/bin:$PATH"
-RUN eval "$(pyenv init -)"
+RUN . .bashrc
 
 # Python Install
 RUN pyenv install
