@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TAG="v1.21.1"
+
 set -xeu
 
 # Display the OS information
@@ -15,7 +17,7 @@ apt-get update -y \
 && apt-get install git python3-pip -y --no-install-recommends
 
 # Clone the AWS IoT Device SDK for Python v2 repository
-git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git
+git clone https://github.com/aws/aws-iot-device-sdk-python-v2.git -b $TAG
 
 # Install the dependencies and build the wheel package
 cp requirements.txt aws-iot-device-sdk-python-v2/

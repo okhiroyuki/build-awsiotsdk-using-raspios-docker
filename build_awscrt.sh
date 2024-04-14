@@ -1,5 +1,7 @@
 #!/bin/bash
 
+TAG="v0.20.5"
+
 set -xeu
 
 # Display the OS information
@@ -12,13 +14,13 @@ uname -a
 
 # Install dependencies
 apt-get update -y \
-&& apt-get install git python3-pip cmake -y --no-install-recommends
+&& apt-get install git python3-pip cmake python3-dev -y --no-install-recommends
 
 # Set the default directory for the safe command
 git config --global --add safe.directory /app
 
 # Clone the AWS Common Runtime (CRT) for Python repository
-git clone https://github.com/awslabs/aws-crt-python.git -b v0.20.5
+git clone https://github.com/awslabs/aws-crt-python.git -b $TAG
 cd aws-crt-python
 git submodule update --init
 python3 -m pip install .
