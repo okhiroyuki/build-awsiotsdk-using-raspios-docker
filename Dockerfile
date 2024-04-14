@@ -1,5 +1,7 @@
 FROM raspios-lite-armhf:2022-04-04
 
+SHELL ["/bin/bash", "-c"]
+
 # Install dependencies
 # refs: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 RUN sudo apt-get update -y \
@@ -14,14 +16,9 @@ RUN curl https://pyenv.run | bash \
     && echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc \
     && echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc \
     && echo 'eval "$(pyenv init -)"' >> ~/.bashrc \
+    && source ~/.bashrc
 
-# Set environment variables
-ENV PYENV_ROOT=/root/.pyenv \
-    PATH=$PYENV_ROOT/bin:$PATH
-
-RUN eval "$(pyenv init -)"
-
-# Python Install
+    # Python Install
 RUN pyenv install
 
 # Install dependencies
