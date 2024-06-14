@@ -12,3 +12,5 @@ python3 -m pip install .
 
 # Install the dependencies and build the wheel package
 python3 setup.py bdist_wheel
+
+ls -R awscrt/dist
