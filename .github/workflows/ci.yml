@@ -21,7 +21,7 @@ jobs:
     - name: build awscrt
       run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
     - name: cp wheel
-      run: |
+      run: |# sudo docker compose cp python3:/workspace/aws-iot-device-sdk-python-v2/dist /dist
         sudo docker compose cp python3:/workspace/aws-crt-python/dist /dist
     - name: docker-compose down
       run: docker-compose down
