@@ -15,7 +15,7 @@ jobs:
     # - name: Import Docker Image
     #   run: bash import_docker_image.sh
     - name: Docker Build
-      run: docker build --file Dockerfile.raspios --platform linux/armv7l --tag raspios-lite-armhf:2022-04-04
+      run: docker build --file Dockerfile.raspios --platform linux/armv7l --tag raspios-lite-armhf:2022-04-04 .
     - name: Docker images
       run: docker images
     # - name: docker compose up
