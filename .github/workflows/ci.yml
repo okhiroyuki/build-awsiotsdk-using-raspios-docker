@@ -14,6 +14,8 @@ jobs:
       uses: docker/setup-qemu-action@v3
     # - name: Import Docker Image
     #   run: bash import_docker_image.sh
+    - name: Download
+      run: wget https://downloads.raspberrypi.org/raspios_lite_armhf/root.tar.xz -q
     - name: Docker Build
       run: docker build --file Dockerfile.raspios --platform linux/armv7l --tag raspios-lite-armhf:2022-04-04 .
     - name: Docker images
