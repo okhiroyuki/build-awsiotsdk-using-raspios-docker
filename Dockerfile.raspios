@@ -1,0 +1,5 @@
+FROM scrach
+
+RUN wget https://downloads.raspberrypi.org/raspios_lite_armhf/root.tar.xz -q
+ADD root.tar.xz .
+CMD /bin/bash
