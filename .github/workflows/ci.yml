@@ -20,19 +20,21 @@ jobs:
     #   run: docker build --file Dockerfile.raspios --platform linux/armv7l --tag raspios-lite-armhf:2022-04-04 .
     - name: Docker images
       run: docker images
-    - name: docker compose up
-      run: docker compose up -d --build
-    - name: docker compse ps
-      run: docker compose ps
-    - name: build awscrt
-      run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
-    - name: cp wheel
-      run: |
-        sudo docker compose cp python3:/workspace/aws-crt-python/dist /dist
-    - name: docker-compose down
-      run: docker-compose down
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: /dist
+    - name: Docker ps
+      run: docker ps
+    # - name: docker compose up
+    #   run: docker compose up -d --build
+    # - name: docker compse ps
+    #   run: docker compose ps
+    # - name: build awscrt
+    #   run: docker-compose exec -T python3 bash -c "bash build_awscrt.sh"
+    # - name: cp wheel
+    #   run: |
+    #     sudo docker compose cp python3:/workspace/aws-crt-python/dist /dist
+    # - name: docker-compose down
+    #   run: docker-compose down
+    # - name: Upload Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: dist
+    #     path: /dist
